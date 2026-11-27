@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "course": {
+    "schemaVersion": 1,
+    "id": "433f23d5-7a0d-4415-add4-d5ec0f1f45fd",
+    "title": "정후를 위한 백엔드 기초",
+    "description": "",
+    "category": "FastAPI",
+    "level": "입문",
+    "accent": "coral",
+    "createdAt": "2026-11-27T14:34:32.047Z",
+    "updatedAt": "2026-11-27T15:12:17.395Z"
+  },
+  "lesson": {
+    "id": "1256d601-e789-4087-8f65-31618852eaa2",
+    "order": 1,
+    "title": "백엔드 기초 요청과 응답",
+    "content": "## 핵심 개념\n\n- 요청 (Request) : 클라이언트가 서버로 보내는 메세지\n  - Path Parameter (경로 매개변수) : URL 경로의 일부를 변수로 사용함\n    <br>( 예 : /users/{user_id} )<br>\n    ```Python\n    @app.get(\"/users/{user_id}\")\n    def get_user(user_id : int) :\n      return { \"user_id\" : user_id }\n    ```\n    <br>\n  - Query Parameter (쿼리 매개변수) : URL 뒤에 ? 를 붙여서 변수로 사용함 <br>( 예 : /handsomeguy?who=moonjunghoo )<br>\n    ```Python\n    @app.get(\"/handsomeguy\")\n    def get_user(who: str) :\n      return { \"handsome guy\" : who }\n    ```\n    <br>\n  - Request Body (요청 본문) : 데이터 생성/수정 시 Pydantic 모델등을 사용해서 안전하게 데이터를 주고 받는 방식 <br>\n    ```Request_Body\n    {\n      name : \"moon jung hoo\",\n      age : 17,\n    }\n    ```\n    ```Python\n    @app.post(\"/users\")\n    def create_user(user: user_create_dto) :\n      name = user_create_dto.name\n      age = user_create_dto.age\n      return user_service.create_user(name, age)\n    ```\n- 응답(Response): 서버가 처리를 마치고 클라이언트에 돌려주는 메시지\n  - return문이 응답에 해당됨\n\n ## 목표\n - 주제 자유\n - 경로 매개변수와 쿼리 매개변수를 활용한 간단한 api 각 3개씩 제작해보기\n - 요청 : 이거주세용 (원하는 메뉴 리스트와 돈을 넘겨주며)\n - 응답 : 넹 여기용~ (음식을 주며)",
+    "duration": 10,
+    "files": {
+      "main.py": "from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get(\"/\")\ndef hello():\n    return \"hello world!\"\n"
+    },
+    "entrypoint": "main:app"
+  }
+}

@@ -1,0 +1,9 @@
+app/node_modules/
+app/dist/
+app/release/
+app/.venv/
+app/.test-data/
+app/test-results/
+*.log
+.DS_Store
+.npm-cache/

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "course": {
+    "schemaVersion": 1,
+    "id": "433f23d5-7a0d-4415-add4-d5ec0f1f45fd",
+    "title": "정후를 위한 백엔드 기초",
+    "description": "",
+    "category": "FastAPI",
+    "level": "입문",
+    "accent": "coral",
+    "createdAt": "2026-11-27T14:34:32.047Z",
+    "updatedAt": "2026-11-27T15:12:17.395Z"
+  },
+  "lesson": {
+    "id": "512d8052-d4c6-4c10-a846-762a506f2d95",
+    "order": 2,
+    "title": "restapi로 알아보는 controller와 api 구조화",
+    "content": "## 핵심 개념\n\n## - REST API란?\n  - REpresentational State Transfer API의 약자로, 웹 상에서 서버와 클라이언트가 통신하는 규격중 하나\n  - 자원(Resource)을 URI로 표현하고, HTTP Method(GET, POST, PUT, DELETE)를 통해 해당 자원에 대한 행위를 정의함\n  - 정후 이해 안되면? 그냥 규칙에다 있어보이는 이름 붙인거임ㅇㅇ\n\n  - | 메소드 | 기능 |\n  | --- | --- |\n  | GET | 서버에서 자원 가져오기 |\n  | POST | 서버에 내 자원 올리기 |\n  | PUT | 서버에 올라간 자원 다른 데이터로 갈아 끼우기 (대신 같은 형식만 지원<br> [사과 -> 바나나] (O), [사과 -> 이지한] (X) |\n  | DELETE | 서버 자원 저세상 보내기 |\n\n<br><br>\n## - Controller란?\n  - 사용자의 요청을 받아 비즈니스 로직을 수행하고, 그 결과를 응답으로 돌려주는 인터페이스의 일종\n  - FastAPI에서는 주로 APIRouter를 활용\n  - 그냥 달라하면 주는 종업원 새기임\n  - **아니 근데 왜 파일 분리까지 하면서 라우터를 정리할까?** : 안하면 코드 조뻉이 치면서 읽어야됨\n<br><br>\n\n## - 파일로 관리하는 Controller\n  - APIRouter : 각 모듈에 등록해서 사용하는 라우터 객체\n  - include_router : 등록한 라우터 객체를 통합하는 함수\n```files\nroot/\n├── main.py\n└── routers/\n    └── user_router.py\n    └── another_router.py\n```\n\n```\n#routers/user_router.py\nfrom fastapi import APIRouter\n\n# APIRouter 인스턴스 생성\n# 공통 주소(prefix) 설정\n#공통주소란? : api앞에 붙는것들 ( 예 : api/v1/users/1, api/v2/comments/2 )\nrouter = APIRouter(prefix=\"/users\", tags=[\"Users\"])  \n\n\n@router.get(\"/\")\ndef get_users():\n  return [{\"username\": \"김철수\"}, {\"username\": \"이영희\"}]\n\n\n@router.post(\"/\")\ndef create_user(username: str):\n  return {\"message\": f\"사용자 {username} 님이 등록되었습니다.\"}\n```\n\n```\n#routers/another_router.py\nfrom fastapi import APIRouter\n\nrouter = APIRouter(prefix=\"/anothers\", tags=[\"Users\"])  \n\n\n@router.get(\"/\")\ndef get_junghoo():\n  return \"junghoo\"\n```\n```\n#main.py\nfrom fastapi import FastAPI\nfrom routers import user_router  # 방금 만든 라우터 임포트\nfrom routers import another_router\n\napp = FastAPI()\n\n# 메인 앱에 라우터 연결\napp.include_router(user_router.router)\napp.include_router(another_router.router)\n\n\n@app.get(\"/\")\ndef root():\nreturn {\"message\": \"server running\"}\n```\n ## 목표\n - 주제 자유\n - 3개 이상의 라우터 모듈을 분리해서 각각 prefix달고 api 두개이상씩 만들어 보기(get, post, delete 모두 포함, 실제 기능 구현x 라우터만 구현, 응답은 문자열로 해도 상관 없음)",
+    "duration": 10,
+    "files": {
+      "main.py": "from fastapi import FastAPI\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef read_root():\n    return {\"message\": \"Hello, learncode!\"}\n"
+    },
+    "entrypoint": "main:app"
+  }
+}
